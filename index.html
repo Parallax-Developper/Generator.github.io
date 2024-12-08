@@ -1,0 +1,63 @@
+<script>
+    // Base de données complète des noms
+    const namesDatabase = {
+        prenoms: [
+            "Emma", "Lucas", "Léa", "Louis", "Chloé", "Hugo", "Sarah", "Nathan", "Jade", "Théo"
+            // Ajoute d'autres noms ici
+        ],
+        fantastiques: [
+            "Eldorion", "Zyntrax", "Aelindra", "Thaelar", "Mystrael"
+            // Ajoute d'autres noms ici
+        ],
+        gamers: [
+            "ShadowWolf", "Xx_ProSniper_xX", "DragonSlayer99", "Epic_Gamer_420", "NinjaWarrior"
+            // Ajoute d'autres noms ici
+        ],
+        entreprises: [
+            "TechNova", "GreenSphere", "InnovaTech", "EcoSolutions", "FutureWave"
+            // Ajoute d'autres noms ici
+        ]
+    };
+
+    const nameTypeSelect = document.getElementById('nameType');
+    const generateBtn = document.getElementById('generateBtn');
+    const generatedNameDiv = document.getElementById('generatedName');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function generateRandomName() {
+        const selectedType = nameTypeSelect.value;
+        const namesList = namesDatabase[selectedType];
+
+        if (namesList && namesList.length > 0) {
+            const randomIndex = Math.floor(Math.random() * namesList.length);
+            const randomName = namesList[randomIndex];
+
+            // Met à jour l'interface utilisateur
+            generatedNameDiv.textContent = randomName;
+            generatedNameDiv.classList.add('fade-in');
+            setTimeout(() => generatedNameDiv.classList.remove('fade-in'), 500);
+        } else {
+            generatedNameDiv.textContent = "Aucun nom disponible.";
+        }
+    }
+
+    function copyToClipboard() {
+        const textToCopy = generatedNameDiv.textContent;
+
+        if (textToCopy && textToCopy !== "Cliquez sur Générer pour commencer" && textToCopy !== "Aucun nom disponible.") {
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    alert("Nom copié dans le presse-papier !");
+                })
+                .catch(() => {
+                    alert("Échec de la copie. Essayez à nouveau.");
+                });
+        } else {
+            alert("Rien à copier !");
+        }
+    }
+
+    // Ajout des écouteurs d'événements
+    generateBtn.addEventListener('click', generateRandomName);
+    copyBtn.addEventListener('click', copyToClipboard);
+</script>
